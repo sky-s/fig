@@ -1,0 +1,12 @@
+{
+"fig":
+    {
+        "inputs":
+        [
+            {"name":"name", "kind":"ordered", "type":"char"},
+			{"name":"holdflag", "kind":"optional", "type":["char", "choices={'-noreset'}"]},
+			{"name":"silentflag", "kind":"optional", "type":["char", "choices={'-silent'}"]},
+            {"name":"opts", "kind":"properties", "type":"matlab.ui.Figure"}
+        ]
+    }
+}
