@@ -9,21 +9,24 @@ function h_ = fig(name,varargin)
 %   created with that name.
 % 
 %   By default, the specified figure is made current figure without forcing it
-%   to become visible and raised above other figures. The '-raise' argument
-%   forces the figure to become visible and raises it above all other figures on
-%   the screen, similar to the behavior of the figure function.
+%   to become visible and raised above other figures. This can be especially
+%   useful when debugging or tweaking a specific plot in a code. To get behavior
+%   more similar to the figure function, use the '-raise' argument to force the
+%   figure to become visible and raise it above all other figures on the
+%   screen.
 % 
 %   The '-reset' argument makes it so that when switching to an existing figure,
 %   that figure is cleared (using the harder 'reset' argument for clf) such that
 %   it is like a newly-created figure window. This useful in cases when the hold
-%   state is 'on', for example.
+%   state may be 'on', for example.
 % 
 %   Additional arguments are passed to the figure function.
 % 
 %   Both the '-raise' argument and the '-reset' argument add extra steps that
 %   slow things down. By default, however, using fig can be noticeably faster
 %   than traditional figure window management schemes such as closing all
-%   windows at the top of every script or calling figure with integer arguments.
+%   windows at the beginning of every script or calling the figure function with
+%   integer arguments.
 %
 %   Example (run this multiple times to further illustrate utility of fig):
 %     fig sine
