@@ -3,37 +3,41 @@ function h_ = fig(name,varargin)
 % 
 %   fig, by itself, creates a new figure window and returns its handle.
 %   
-%   fig(name) makes the figure with the specified name the current figure,
-%   forces it to become visible, and raises it above all other figures on the
-%   screen. If multiple existing figure windows match the name, the first one
-%   returned by findobj is used. If a figure with that name does not exist, a
-%   new figure is created with that name.
+%   fig(name) makes the figure with the specified name the current figure. If
+%   multiple existing figure windows match the name, the first one returned by
+%   findobj is used. If a figure with that name does not exist, a new figure is
+%   created with that name.
 % 
-%   When switching to an existing figure, that figure is cleared using the
-%   harder 'reset' argument for clf such that it is like a newly-created figure
-%   window. To avoid this and have behavior more similar to switching windows
-%   using the figure function, use the '-noreset' argument.
+%   By default, the specified figure is made current figure without forcing it
+%   to become visible and raised above other figures. The '-raise' argument
+%   forces the figure to become visible and raises it above all other figures on
+%   the screen, similar to the behavior of the figure function.
 % 
-%   The '-silent' argument will make the specified existing named figure the
-%   current figure without forcing it to become visible and raised above other
-%   figures.
-%
+%   The '-reset' argument makes it so that when switching to an existing figure,
+%   that figure is cleared (using the harder 'reset' argument for clf) such that
+%   it is like a newly-created figure window. This useful in cases when the hold
+%   state is 'on', for example.
+% 
 %   Additional arguments are passed to the figure function.
 % 
+%   Both the '-raise' argument and the '-reset' argument add extra steps that
+%   slow things down. By default, however, using fig can be noticeably faster
+%   than traditional figure window management schemes such as closing all
+%   windows at the top of every script or calling figure with integer arguments.
+%
 %   Example (run this multiple times to further illustrate utility of fig):
-%       fig sine % Create new named figure window.
-%       ezplot(@sin)
+%     fig sine
+%     ezplot(@sin)
 % 
-%       % Create new named figure window (or silently make existing figure
-%       % window current).
-%       fig('waves','-silent','Color','w')
-%       ezplot(@sin);
-%       hold on
-%       ezplot(@cos)
+%     % Switch to new named figure window.
+%     fig('waves','-reset','Color','w')
+%     ezplot(@sin);
+%     hold on % Using -reset argument because of hold state.
+%     ezplot(@cos)
 % 
-%       % Switch to first window using meaningful name; do not clear figure.
-%       fig sine -noreset
-%       line % Draw tangent line.
+%     % Switch to first window using meaningful name.
+%     fig sine
+%     line % Draw tangent line.
 %
 %   See also figure, clf, findobj, close, cch, gcf, set.
 
@@ -46,7 +50,7 @@ defaultsFigureArgs = {};
 
 if nargin
     % Parse flags.
-    keywords = {'silent' 'noreset'};
+    keywords = {'reset' 'raise'};
     for i = 1:numel(keywords)
         kwInd = strcmpi(varargin,['-' keywords{i}]);
         flags.(keywords{i}) = any(kwInd);
@@ -59,16 +63,16 @@ if nargin
         h = figure(props{:},defaultsFigureArgs{:},varargin{:});
     else
         h = h(1); % In case multiple matches.
-        if ~flags.noreset
+        if flags.reset
             clf(h,'reset');
         end
         
         set(h,props{:},defaultsFigureArgs{:},varargin{:});
         
-        if flags.silent
-            set(0,'CurrentFigure',h);
-        else
+        if flags.raise
             figure(h);
+        else
+            set(0,'CurrentFigure',h);
         end
     end
     
