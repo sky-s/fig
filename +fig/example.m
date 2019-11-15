@@ -1,4 +1,6 @@
 % Example (run this multiple times to further illustrate utility of fig).
+% 
+%   See also fig.
 
 fig sine
 ezplot(@sin)

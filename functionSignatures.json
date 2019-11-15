@@ -4,8 +4,8 @@
         "inputs":
         [
             {"name":"name", "kind":"ordered", "type":"char"},
-			{"name":"holdflag", "kind":"optional", "type":["char", "choices={'-reset'}"]},
-			{"name":"silentflag", "kind":"optional", "type":["char", "choices={'-raise'}"]},
+			{"name":"resetflag", "kind":"optional", "type":["char", "choices={'-reset'}"]},
+			{"name":"raiseflag", "kind":"optional", "type":["char", "choices={'-raise'}"]},
             {"name":"opts", "kind":"properties", "type":"matlab.ui.Figure"}
         ]
     }
