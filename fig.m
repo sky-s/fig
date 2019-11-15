@@ -1,6 +1,11 @@
 function h_ = fig(name,varargin)
 % fig  Manage figure windows by name and prevent figure window clutter.
 % 
+%   Use fig as you would the figure function, but with a meaningful name as the
+%   argument instead of an integer. This will help organize figure windows,
+%   prevent unnecessary clutter caused by creating new figure windows with every
+%   run of code, and speed up repeated runs.
+% 
 %   fig, by itself, creates a new figure window and returns its handle.
 %   
 %   fig(name) makes the figure with the specified name the current figure. If
@@ -8,12 +13,11 @@ function h_ = fig(name,varargin)
 %   findobj is used. If a figure with that name does not exist, a new figure is
 %   created with that name.
 % 
-%   By default, the specified figure is made current figure without forcing it
-%   to become visible and raised above other figures. This can be especially
+%   By default, the specified figure is made the current figure without forcing
+%   it to become visible and raised above other figures. This can be especially
 %   useful when debugging or tweaking a specific plot in a code. To get behavior
 %   more similar to the figure function, use the '-raise' argument to force the
-%   figure to become visible and raise it above all other figures on the
-%   screen.
+%   figure to become visible and raise it above all other figures on the screen.
 % 
 %   The '-reset' argument makes it so that when switching to an existing figure,
 %   that figure is cleared (using the harder 'reset' argument for clf) such that

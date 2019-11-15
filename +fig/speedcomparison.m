@@ -1,7 +1,7 @@
 cch
 nPlots = 20;
 nRuns = 4;
-x = linspace(pi/2,400);
+x = linspace(0,pi/2,400);
 
 %% Traditional 'close all' approach.
 disp("'close all' approach:")
