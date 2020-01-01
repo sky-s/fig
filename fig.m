@@ -21,8 +21,8 @@ function h_ = fig(name,varargin)
 % 
 %   The '-reset' argument makes it so that when switching to an existing figure,
 %   that figure is cleared (using the harder 'reset' argument for clf) such that
-%   it is like a newly-created figure window. This useful in cases when the hold
-%   state may be 'on', for example.
+%   it is like a newly-created figure window. This is useful in cases when the
+%   hold state may be 'on', for example.
 % 
 %   Additional arguments are passed to the figure function.
 % 
@@ -52,8 +52,8 @@ function h_ = fig(name,varargin)
 % Contact: www.mathworks.com/matlabcentral/fileexchange/authors/101715
 
 % Here you can customize with some preferred figure property defaults.
-% defaults = {'Color','w','Units','inches'}; % Example defaults.
-defaultsFigureArgs = {}; 
+% defaultsFigureArgs = {'Color','w','Units','inches'}; % Example defaults.
+defaultsFigureArgs = {};
 
 if nargin
     % Parse flags.
