@@ -24,7 +24,13 @@ function h_ = fig(name,varargin)
 %   it is like a newly-created figure window. This is useful in cases when the
 %   hold state may be 'on', for example.
 % 
-%   Additional arguments are passed to the figure function.
+%   The '-tag' argument appends name to all figure names, separated by a dash.
+%   With no name argument, just a dash is appended. This is a convenient way to
+%   make the next run of a script create a new figure window instead of
+%   overwriting an existing one.
+% 
+%   Additional arguments are passed to the figure function. By default, the list
+%   of arguments returned by defaultFigArgs.m, if it exists, is used.
 % 
 %   Both the '-raise' argument and the '-reset' argument add extra steps that
 %   slow things down. By default, however, using fig can be noticeably faster
@@ -45,36 +51,58 @@ function h_ = fig(name,varargin)
 %     % Switch to first window using meaningful name.
 %     fig sine
 %     line % Draw tangent line.
+% 
+%     fig A -tag
 %
 %   See also figure, clf, findobj, close, cch, gcf, set.
 
 % Copyright (c), Sky Sartorius. All rights reserved.
 % Contact: www.mathworks.com/matlabcentral/fileexchange/authors/101715
 
-% Here you can customize with some preferred figure property defaults.
-% defaultsFigureArgs = {'Color','w','Units','inches'}; % Example defaults.
-defaultsFigureArgs = {};
+
+try 
+    defaultFigureArgs = defaultFigArgs();
+catch
+    % Here you can hard-code customize with some preferred figure defaults.
+    % Example: defaultFigArgs = {'Color','w','Units','inches'};
+    defaultFigureArgs = {};
+end
 
 if nargin
     % Parse flags.
-    keywords = {'reset' 'raise'};
+    keywords = {'reset' 'raise' 'tag'};
     for i = 1:numel(keywords)
         kwInd = strcmpi(varargin,['-' keywords{i}]);
         flags.(keywords{i}) = any(kwInd);
         varargin = varargin(~kwInd);
     end
+    if flags.tag || (nargin==1 && lower(name)=="-tag")
+        if nargin > 2
+            error("When using the '-tag' argument, fig only expects only" +...
+                " one other argumen (the name of the tag to append.");
+        end
+        H = findobj('Type','figure');
+        if nargin==1 && lower(name)=="-tag"
+            name = "";
+        end
+        for i = 1:numel(H)
+            H(i).Name = H(i).Name + "-" + name;
+        end
+
+        return
+    end
     
     h = findobj('Type','figure','Name',name);
     props = {'Name',name,'NumberTitle','off'};
     if isempty(h) % Does not exist; create new.
-        h = figure(props{:},defaultsFigureArgs{:},varargin{:});
+        h = figure(props{:},defaultFigureArgs{:},varargin{:});
     else
         h = h(1); % In case multiple matches.
         if flags.reset
             clf(h,'reset');
         end
         
-        set(h,props{:},defaultsFigureArgs{:},varargin{:});
+        set(h,props{:},defaultFigureArgs{:},varargin{:});
         
         if flags.raise
             figure(h);
@@ -84,7 +112,7 @@ if nargin
     end
     
 else
-    h = figure(defaultsFigureArgs{:});
+    h = figure(defaultFigureArgs{:});
 end
 
 if nargout
