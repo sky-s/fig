@@ -6,7 +6,7 @@
             {"name":"name", "kind":"ordered", "type":"char"},
 			{"name":"resetflag", "kind":"optional", "type":["char", "choices={'-reset'}"]},
 			{"name":"raiseflag", "kind":"optional", "type":["char", "choices={'-raise'}"]},
-            {"name":"raiseflag", "kind":"optional", "type":["char", "choices={'-cache'}"]},
+            {"name":"tagflag", "kind":"optional", "type":["char", "choices={'-tag'}"]},
             {"name":"opts", "kind":"properties", "type":"matlab.ui.Figure"}
         ]
     }
